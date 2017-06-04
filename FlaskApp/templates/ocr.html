@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style type="text/css">
+	body {margin: 40px; background: #666;}
+	#my_canvas{ background: #FFF; border: #000 1px solid; }
+
+</style>
+
+<script >
+
+
+function init_canvas(){
+
+	var ctx = document.getElementById('my_canvas').getContext('2d');
+	var drawing = false;
+
+
+
+	ctx.canvas.addEventListener("mousedown", function (event) {
+		drawing = true;
+		var ix = event.clientX;
+		var iy = event.clientY;
+		var status = document.getElementById("status");
+		status.innerHTML = '('+ix+ " , " +iy+')' ;	
+	});
+
+
+	ctx.canvas.addEventListener("mousemove", function(event) {
+		if (drawing == true) {
+		var mouseX = event.clientX;
+		var	mouseY = event.clientY;
+		status = document.getElementById("status");
+		status.innerHTML = '('+ix+ " , " +iy+') , (' + mouseX+ " , " + mouseY + ')';
+	};
+
+	});
+
+	// ctx.canvas.addEventListener("mouseup", function (event) {
+	// 	drawing = false
+	// 	mouseX = event.clientX;
+	// 	mouseY = event.clientY;
+	// });
+
+}
+
+
+	window.addEventListener('load', function(event) {
+		init_canvas();
+		// body...
+	});
+
+
+</script>
+	<title></title>
+</head>
+
+
+<body>
+<canvas id = "my_canvas" width="800" height="600" ></canvas>
+
+<h2 id = "status"> hey, it worked</h2>
+<!-- img src="{{ url_for('static', filename='images/test Invoice1.png') }}"> -->
+</body>
+</html>
