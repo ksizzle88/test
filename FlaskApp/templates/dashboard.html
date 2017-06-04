@@ -13,12 +13,21 @@
 
   <!-- Tab panes -->
   <div class="tab-content">
-    <div role="tabpanel" class="tab-pane fade in active" id="basics">thing</div>
+    
+  
+    <div role="tabpanel" class="tab-pane fade in active" id="basics"><ul>
+    {% for t in TOPIC_DICT["Basics"]: %}
+    <li><a href="{{ t[1] }}"> {{ t[0] }}</a>  </li>
+    {% endfor %}
+
+
+    </ul></div>
     <div role="tabpanel" class="tab-pane fade" id="Wdev">stuff</div>
-    <div role="tabpanel" class="tab-pane fade" id="dan">...</div>
+    <div role="tabpanel" class="tab-pane fade" id="dan"> {{ TOPIC_DICT }} </div>
+    
   </div>
 
 </div>
 
 
-{%endblock%}}
+{%endblock%}
