@@ -122,14 +122,23 @@
       </ul>
 	</ul>
 	</div>
-	<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-	<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+
+</header>
+
 
 
 </header>
 
 <body>
 
+	<div class="border-row" style="width: 80%; margin-bottom: 15px;S"> </div>
+
+	<div class="container-fluid" style="min-height:100%">
+	{% block body %}{% endblock%}
+
+	</div>
+	<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
 
 </body>
 

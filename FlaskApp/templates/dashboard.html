@@ -1,0 +1,24 @@
+{% extends "Header.html" %}
+
+{% block body%}
+
+<div>
+
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#basics" aria-controls="basics" role="tab" data-toggle="tab">Basics</a></li>
+    <li role="presentation"><a href="#Wdev" aria-controls="Wdev" role="tab" data-toggle="tab">Web dev</a></li>
+    <li role="presentation"><a href="#dan" aria-controls="dan" role="tab" data-toggle="tab">Data Analysis</a></li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane fade in active" id="basics">thing</div>
+    <div role="tabpanel" class="tab-pane fade" id="Wdev">stuff</div>
+    <div role="tabpanel" class="tab-pane fade" id="dan">...</div>
+  </div>
+
+</div>
+
+
+{%endblock%}}
