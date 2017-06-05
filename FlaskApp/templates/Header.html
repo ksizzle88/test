@@ -46,18 +46,9 @@
 				  </div>
 				  <div class="modal-body">
 					  <div class="container-fluid">
-						  <form action="" class="form-inline" method="post">
-							<input type="text" class="form-control" placeholder="Username" name="username" value="">
-							 <input type="password" class="form-control" placeholder="Password" name="password" value="">
-							<input class="btn btn-primary" type="submit" value="Login">
-						  </form>
-						  
-							<div class="container">
-							<br>
-						   <p>No account? <a href='/register'>Register here</a>.</p>
-						   <br>
-							
-						  </div>
+						  {%block login%}
+						  {%include "login.html"%}
+						  {%endblock%}
 					</div>
 				  </div>
 
