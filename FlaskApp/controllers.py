@@ -1,5 +1,5 @@
 from passlib.hash import sha256_crypt
-from flask import flash, redirect,url_for
+from flask import flash
 
 
 def add_user(form, db):
@@ -12,12 +12,34 @@ def add_user(form, db):
     # If username is taken flash a message and redirect back to register
     if User.query.filter_by(username=username).first():
         flash("Sorry that username is taken")
-        return redirect(url_for("register"))
-
+        return
 
     db.session.add(User(username, email, password))
     db.session.commit()
     flash("thankyou for signing up")
-    return redirect(url_for("dashboard"))
 
-def login(form, db):
+def check_login(form, db):
+    from models import User
+
+    username = form.username.data
+    password = form.password.data
+    user_data = User.query.filter_by(username=username).first()
+    if user_data and sha256_crypt.verify(password, user_data.password):
+        flash("you are logged in")
+        return True
+    else:
+        flash("login failure")
+        return False
+# # def login(form, db):
+#     from models import User
+#
+#
+#     if request.method == "POST":
+#         aun = str(request.form["username"])
+#         apw = str(request.form["password"])
+#         if aun == un and apw == pw:
+#             return redirect(url_for("dashboard"))
+#         else:
+#             return render_template("login.html")
+#             flash("incorrect username and password combo")
+#     return render_template("Login.html")

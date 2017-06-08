@@ -1,15 +1,21 @@
 from flask import render_template, request, url_for, redirect
+from flask_wtf import Form
+from wtforms import StringField, PasswordField
+
+
+class LoginForm(Form):
+    username = StringField('Username')
+    password = PasswordField('Password')
+
+
+
 
 def login():
-    un = "admin"
-    pw = "password"
-
-    if request.method == "POST":
-        aun = str(request.form["username"])
-        apw = str(request.form["password"])
-        if aun == un and apw == pw:
-           return redirect(url_for("dashboard"))
-        else:
-            return render_template("login.html")
-            flash("incorrect username and password combo")
-    return render_template("Login.html")
+    aun = str(request.form["username"])
+    apw = str(request.form["password"])
+    if aun == un and apw == pw:
+       return True
+    else:
+        flash("incorrect username and password combo")
+        return False
+    return render("Login.html")

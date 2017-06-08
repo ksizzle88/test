@@ -1,26 +1,28 @@
 {% block body %}
+
 <div class="container">
 
-    {% from "partials/_formhelpers.html" import render_field %}
+    {% from "partials/_formhelpers.html" import render_reg_field %}
 
     <form method=post action="/register/">
-    {{ form.csrf_token }}
+
+    {{ reg_form.csrf_token }}
+
         <dl>
-            {{render_field(form.username)}}
-            {{render_field(form.email)}}
-            {{render_field(form.password)}}
-            {{render_field(form.confirm)}}
-            {{render_field(form.accept_tos)}}
+            {{render_reg_field(reg_form.username)}}
+            {{render_reg_field(reg_form.email)}}
+            {{render_reg_field(reg_form.password)}}
+            {{render_reg_field(reg_form.confirm)}}
+            {{render_reg_field(reg_form.accept_tos)}}
         </dl>
+
         <p><input type=submit value=Register></p>
 
     </form>
 </div>
 
-{% if form.errors %}
+{% if reg_form.errors %}
 			<p class="error"><strong>Error:</strong>{{error}}</p>
+
 {% endif %}
-
-
-
 {% endblock %}

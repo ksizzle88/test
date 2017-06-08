@@ -65,7 +65,11 @@
 				<h4 class="modal-title" id="exampleModalLabel">Register</h4>
 			  </div>
 			  <div class="modal-body">
-				  <div class="container">
+			 	{%block register%}
+			 	{%include "partials/register.html"%}
+				{%endblock%}
+
+				  {# <div class="container">
 					  
 						<form method=post action="/register">
 						  <dl>
@@ -103,7 +107,7 @@
 						  <p><input type=submit value=Register>
 						</form>
 					  
-				</div>
+				</div> #}
 			  </div>
 
 			</div>

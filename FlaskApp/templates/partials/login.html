@@ -1,13 +1,13 @@
 
 <div>
-<form action="" class="form-inline" method="post">
-    <input type="text" class="form-control" placeholder="Username" name="username" value="{{ request.form.username }}">
-        <input type="password" class="form-control" placeholder="Password" name="password" value="{{ request.form.password }}">
+<form action="/login/" class="form-inline" method="post">
+    {{ login_form.username(class="form-control", placeholder = "Username") }}
+    {{ login_form.password(class="form-control", placeholder = "Password") }}
     <input class="btn btn-primary" type="submit" value="Login">
 </form>
 </div>
 <div class="container">
     <br>
-    <p>No account? <a href='/register'>Register here</a>.</p>
+    <p>No account? <a href='/register/'>Register here</a>.</p> 
     <br>
 </div>

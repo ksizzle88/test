@@ -1,0 +1,7 @@
+body {margin: 40px; background: #666;}
+
+	#my_canvas{ background: transparent; border: #000 1px solid; }
+	#status display: absolute; right: 0; }
+	#layer1{ position: absolute; left: 0; top: 0; z-index: 0;}
+	#my_canvas{ position: absolute; left: 0; top: 0; z-index: 1;}
+	#image{display: none}
