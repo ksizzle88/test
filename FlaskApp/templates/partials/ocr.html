@@ -2,17 +2,19 @@
 <script src = 'canvas select.js'></script>#}
 <body>
 <div id = "container" class = "container">
-  <div style="position: relative;">
-	 <canvas id="layer1" width="400" height="575" ></canvas>
-	 <canvas id="my_canvas" width="400" height="575" ></canvas>
+  <div id="canvas_container" style="position: relative;">
+	 <canvas id="layer1" width="425" height="550" ></canvas>
+	 <canvas id="my_canvas" width="425" height="550" class="active_field_canv" ></canvas>
 
 </div>
   <h2 id = "status"> stuff </h2>
 
 </div>
 
-<img id ='image' src="{{url_for('static', filename = 'images/test Invoice.png')}}">
+<img id ='image' src="{{ url_for('static', filename = 'images/test Invoice.png') }}">
 
 <input type = 'button' onclick = 'crop()' value = "crop crop crop">
+
+<input type = 'button' onclick = 'create_canvas("canvas")' value = "create_canvas">
 <div id = 'crop'>
 </div>
