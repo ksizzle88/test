@@ -4,7 +4,7 @@
 <div id = "container" class = "container">
   <div id="canvas_container" style="position: relative;">
 	 <canvas id="layer1" width="425" height="550" ></canvas>
-	 <canvas id="my_canvas" width="425" height="550" class="active_field_canv" ></canvas>
+	 {# <canvas id="my_canvas" width="425" height="550" class="active_field_canv" ></canvas> #}
 
 </div>
   <h2 id = "status"> stuff </h2>
@@ -15,6 +15,7 @@
 
 <input type = 'button' onclick = 'crop()' value = "crop crop crop">
 
-<input type = 'button' onclick = 'create_canvas("canvas")' value = "create_canvas">
-<div id = 'crop'>
-</div>
+<input type = 'button' onclick = 'deactivate_canvas()' value = "deactivate_canvas">
+
+<input type = 'button' onclick = 'activate_my_canvas()' value = "activate_canvas">
+<div id = 'crop

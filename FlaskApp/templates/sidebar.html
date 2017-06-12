@@ -80,44 +80,15 @@
                                     Invoice
                             </div>
                             <div class="panel-body", id="image_frame">
-                                <div>
-                                    <span class="button-checkbox">
-                                        <button type="button" class="btn" data-color="default">Default</button>
-                                        <input type="checkbox" class="hidden" checked />
-                                    </span>
-                                    <span class="button-checkbox">
-                                        <button type="button" class="btn" data-color="primary">Primary</button>
-                                        <input type="checkbox" class="hidden" checked />
-                                    </span>
-                                    <span class="button-checkbox">
-                                        <button type="button" class="btn" data-color="success">Success</button>
-                                        <input type="checkbox" class="hidden" checked />
-                                    </span>
-                                    <span class="button-checkbox">
-                                        <button type="button" class="btn" data-color="info">Info</button>
-                                        <input type="checkbox" class="hidden" checked />
-                                    </span>
-                                    <span class="button-checkbox">
-                                        <button type="button" class="btn" data-color="warning">Warning</button>
-                                        <input type="checkbox" class="hidden" checked />
-                                    </span>
-                                    <span class="button-checkbox">
-                                        <button type="button" class="btn" data-color="danger">Danger</button>
-                                        <input type="checkbox" class="hidden" checked />
-                                    </span>
-                                    <span class="button-checkbox">
-                                        <button type="button" class="btn" data-color="link">Link</button>
-                                        <input type="checkbox" class="hidden" checked />
-                                    </span>
+                                <div id = "field_buttons">
                                 </div>
                                 {% block ocr%}
                                 {%include 'partials/ocr.html'%}
                                 {%endblock%}
-
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6">                    
+                    {# <div class="col-md-6">                    
                         <div class="panel panel-success">
                             <div class="panel-heading">
                                     Panel 1
@@ -126,7 +97,7 @@
                                 content body
                             </div>
                         </div>
-                    </div>
+                    </div> #}
                 </div>
             </div>
         </div>
@@ -136,7 +107,9 @@
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='js/sidebar.js')}}"></script>
+<script src='https://cdn.rawgit.com/naptha/tesseract.js/1.0.10/dist/tesseract.js'></script>
 <script type="text/javascript" src="{{ url_for('static', filename='js/canvas select.js')}}"></script>
+
 
 </body>
 </html>
