@@ -59,10 +59,16 @@ class field
 			activate_canvas(field)
 		})
 	var input = button.appendChild(document.createElement("input"))
+	input.id = this.name + "_input"
 	input.className = "form-control input-number"
 	input.value = "stuff"
 	input.zIndex = 0
 	button.zIndex = 1
+	}
+
+	update_input()
+	{
+		document.getElementById(this.name + "_input").value = this.text
 	}
 
 }
@@ -191,14 +197,24 @@ function crop()
 	var crop_img = document.getElementById('image');
 	crop_ctx.drawImage(srccanv, ix,iy,width,height,0,0,width,height);
 	crop_url = crop_ctx.canvas.toDataURL();
-	// crop_image = document.createElement('img');
+	// console.log(crop_url)
+
+	// var worker = new Worker("../static/js/tess_worker.js");
+
+	// 	worker.addEventListener('message', function(e) 
+	// 	{
+	// 	  console.log('not the worker');
+	// 	}, false);
+
+	// 	worker.postMessage(crop_url);
+	// // crop_image = document.createElement('img');
 	// crop_image.src = crop_url
 	// document.body.appendChild(crop_image)
-	// Tesseract.recognize(crop_url).then(function(result)
-	// {
-	// ocr_obj = result
-	// })
-	console.log(crop_url)
+	Tesseract.recognize(crop_url).then(function(result)
+	{
+		active_field.text = result.text
+		active_field.update_input()
+	})
 }
 
 
@@ -249,4 +265,6 @@ for (var key in fields)
 	active_field = fields.amount
 	init_foreground(fields.amount);	
 });
+
+Tesseract
 
