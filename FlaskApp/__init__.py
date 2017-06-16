@@ -3,8 +3,8 @@ from helpers.ContentManagement import Content
 from helpers.login import login, LoginForm
 from helpers.register_form import RegistrationForm
 from flask_sqlalchemy import SQLAlchemy
-from controllers import add_user, check_login
-from helpers.debug import psave
+from controllers import add_user, check_login, add_invoice
+import sys
 
 def render(url_path, **kwargs):
     stuff = {"reg_form": RegistrationForm(request.form),
@@ -87,9 +87,11 @@ def logout():
     session.clear()
     return redirect("/")
 
+
 @app.route('/ajax/')
 def ajax_test():
     return render('ajax_test.html')
+
 
 @app.route('/_add_numbers')
 def add_numbers():
@@ -97,10 +99,21 @@ def add_numbers():
     b = request.args.get('b', 0, type=int)
     return jsonify(result=a * b)
 
+
 @app.route('/sidebar/')
 def side():
     return render_template("sidebar.html")
 
+
+@app.route('/_save_data')
+def save_data():
+    add_invoice(request, db);
+    return "completed"
+
+
+@app.route('/drop/')
+def drop():
+    return render("dropzone.html")
 
 if __name__ == "__main__":
     app.run()

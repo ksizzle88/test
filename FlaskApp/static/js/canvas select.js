@@ -25,13 +25,11 @@ class field
     this.button = ""
   }
 
-
   update_color()
   {
   	this.fill_color = rgb_to_rgba(this.color, this.fill_alpha);
     this.border_color = rgb_to_rgba(this.color, this.stroke_alpha);
   }
-
 
   create_canvas()
   {
@@ -53,7 +51,6 @@ class field
 	button.id = this.name + "_field_span"
 	button.style.backgroundColor = this.fill_color;
 	var field = this;
-	console.log(field)
 	button.addEventListener('click', function()
 		{
 			activate_canvas(field)
@@ -61,14 +58,19 @@ class field
 	var input = button.appendChild(document.createElement("input"))
 	input.id = this.name + "_input"
 	input.className = "form-control input-number"
-	input.value = "stuff"
+	input.value = ""
 	input.zIndex = 0
 	button.zIndex = 1
 	}
 
-	update_input()
+	set_input()
 	{
 		document.getElementById(this.name + "_input").value = this.text
+	}
+
+	get_input()
+	{
+		return document.getElementById(this.name + "_input").value	
 	}
 
 }
@@ -87,8 +89,6 @@ function rgb_to_rgba(rgb, a)
 function init_foreground(field)
 {    
 	active_canvas = field.canvas
-	console.log(active_canvas)
-	console.log(field.canvas)
 	active_canvas.className = "active_field_canv"
 	var ctx = active_canvas.getContext('2d');/*  document.getElementById('my_canvas').getContext('2d');*/
 	
@@ -176,6 +176,14 @@ function init_image()
 }
 
 
+function get_all_inputs(fields) {
+	var input_dict = {}
+	for (var key in fields)
+	{
+		input_dict[fields[key].name] =  fields[key].get_input()
+	}
+	return input_dict
+}
 
 
 
@@ -213,7 +221,7 @@ function crop()
 	Tesseract.recognize(crop_url).then(function(result)
 	{
 		active_field.text = result.text
-		active_field.update_input()
+		active_field.set_input()
 	})
 }
 
@@ -263,8 +271,44 @@ for (var key in fields)
 
 	init_image();
 	active_field = fields.amount
-	init_foreground(fields.amount);	
+	init_foreground(fields.amount);
+
+	$('#testytesttest').bind('click', function() 
+      {
+        $.getJSON('/_save_data', 
+        {
+          Amount: $('input[id="Amount_input"]').val(),
+          Invoice_Date: $('input[id="Invoice_Date_input"]').val()
+        
+        })
+    }
+    );	
 });
 
-Tesseract
+	var reader = new FileReader();
+	var img = new Image;
+
+	reader.onload = function (e) {
+        img.src = e.target.result;
+        
+        setTimeout(function()
+        { 
+        	var ctx = document.getElementById("layer1").getContext('2d');
+			ctx.drawImage(img, 0, 0, img.width,    img.height,     // source rectangle
+                   0, 0, ctx.canvas.width, ctx.canvas.height);
+		 }, 10);
+    };
+
+	function dropped(event) 
+	{	
+
+		event.preventDefault();
+		// img = document.body.appendChild(document.createElement("img"))
+		reader.readAsDataURL(event.dataTransfer.files[0])
+		console.log("now_i_ran")
+
+
+	}
+
+
 

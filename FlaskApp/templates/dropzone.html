@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+<style type="text/css">
+	#dropzone
+	{
+		background-color: #EEE;
+		border: dashed;
+		width: 100px;
+		height: 100px;
+	}
+
+</style>
+
+</head>
+<body>
+<div id="dropzone" ondragover="return false", ondrop="dropped(event)"">
+</div>
+<script type="text/javascript">
+
+	var img_url
+	var reader = new FileReader();
+	var img
+
+	reader.onload = function (e) {
+        img.src = e.target.result;
+    };
+
+	function dropped(event) 
+	{	
+
+		event.preventDefault();
+		img = document.body.appendChild(document.createElement("img"))
+		
+		reader.readAsDataURL(event.dataTransfer.files[0])
+
+
+		// console.log(img)
+        // console.log(reader.readAsDataURL(event.dataTransfer.files[0]));
+	}	
+</script>
+</body>
+</html>

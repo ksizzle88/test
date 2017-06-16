@@ -1,6 +1,6 @@
 from passlib.hash import sha256_crypt
 from flask import flash
-
+import sys
 
 def add_user(form, db):
     from models import User
@@ -30,6 +30,21 @@ def check_login(form, db):
     else:
         flash("login failure")
         return False
+
+def add_invoice(request, db):
+    from models import Invoice
+
+    date = request.args.get('Invoice_Date', 0, type=str)
+    amount = request.args.get('Amount', 0, type=float)
+
+    # f = open("workfile", "w")
+    # f.write("date {}, amount {}".format(date, amount))
+    # f.close()
+
+    # If username is taken flash a message and redirect back to register
+
+    db.session.add(Invoice(date, amount))
+    db.session.commit()
 # # def login(form, db):
 #     from models import User
 #
