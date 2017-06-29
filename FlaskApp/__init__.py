@@ -28,8 +28,7 @@ db = SQLAlchemy(app)
 
 @app.route('/')
 def homepage():
-        flash("test flash")
-        return render("main.html")
+        return render("MLB.html")
 
 
 @app.route('/login/', methods=["GET", "POST"])
