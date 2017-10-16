@@ -152,7 +152,7 @@ def get_player_data():
         yb = balls.pz
         szt = df.sz_top.mean()
         szb = df.sz_bot.mean()
-        plate_edge = 17 / 2 / 12
+        plate_edge = 17.0 / 2.0 / 12.0
         bl = (-plate_edge, szb)
         h = float(szt - szb)
         w = float(plate_edge * 2)
@@ -163,7 +163,7 @@ def get_player_data():
         plt.scatter(xs, ys, s=1, marker=u'o', c='red')
 
         return (fig)
-    plot = mpld3.fig_to_d3(get_plot(p.id))
+    plot = mpld3.fig_to_html(get_plot(p.id))
 
 
 

@@ -4,6 +4,7 @@
 	<title>Welcome to my website!</title>
 </head>
 <body>
+
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
      <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"
           rel="stylesheet">
@@ -14,29 +15,25 @@
         $.getJSON('/_get_player_data', {
           player: $('input[name="name"]').val()
         }, function(data) {
-          $("#result").text(data.result);
+          $("#result").html(data.result);
         });
         return false;
       });
     });
   </script>
 
-
+<div style="width:800px; margin:0 auto;">
 	<p>
-	this page is largely still under construction, but since I have been sending out a lot of applications and refrencing it; I figured I should throw something togeather really quick.
-	</p>
-	<p>Below is the location of all of the pitches thrown to David Ortiz over the course of the 2016 season that he did not swing at. Strikes are marked in red and balls are marked in blue.
-	</p>
-	<div >
-	<img src= "{{ url_for('static', filename = 'images/david_ortiz_called_pitches.png')}}">
-	</div>
-	<p> As you can see, teams tend to pitch him away. Also the umpires tend to be more lenient with their strike calls on the outside part of the plate (David Ortiz is a lefty) so he would be standing on the right side of the image as it is from the perspective of behind home plate </p>
-
+	<br>
 	<br>
 
-	<p>
-	Over the coming days I plan to make this much more interactive, first up is allowing you to filter for the hitter. Other thoughts might be to use tableau display the data in a much more interactive way, but my dataset is far too large to work with the public version of tableau. It would aslo be worth while to add some syling so this page doesn't look so bland.
-	</p>
+	   Please select a Player to display the pitches he did not swing at during the 2016 season.
+	<br>
+	<br>
+	   red markes were called strikes, blue marks are called balls, the rectangle is the strikezone as defined by the rulebook.
+	<br>
+	<br>
+	   you can search for a player in the box below, or just arrow down to pick one.	</p>
 
 	<input list="players" name="name">
 	<datalist id="players">
@@ -46,8 +43,9 @@
 	</datalist>
 
 	</input>
-	<p><a href="javascript:void();" id="retrieve">retrieve player</a></p>
+	<p><a href="javascript:void();" id="retrieve">get chart</a></p>
 	<span id= "result">?</span>
-	
+
+	</div>
 </body>
 </html>
