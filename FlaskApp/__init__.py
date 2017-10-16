@@ -4,6 +4,13 @@ from helpers.login import login, LoginForm
 from helpers.register_form import RegistrationForm
 from flask_sqlalchemy import SQLAlchemy
 from controllers import add_user, check_login, add_invoice
+from mlb_db_models import *
+from sqlalchemy.orm import sessionmaker, scoped_session
+from matplotlib import pylab as plt
+from matplotlib import patches
+import pandas
+import mpld3
+
 import sys
 
 def render(url_path, **kwargs):
@@ -26,9 +33,17 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://keith:goodhand@localhost/python
 db = SQLAlchemy(app)
 
 
-@app.route('/')
+@app.route('/', methods= ['GET','POST'])
 def homepage():
-        return render("MLB.html")
+    from mlb_db_models import *
+    from sqlalchemy.orm import sessionmaker, scoped_session
+
+    engine = create_engine("mysql://keith:goodhand@localhost/mlb_data")
+    # db = engine.connect()
+    session = scoped_session(sessionmaker(engine, autoflush=False))
+    players = session.query(Player).all()
+
+    return render("MLB.html", players=players)
 
 
 @app.route('/login/', methods=["GET", "POST"])
@@ -96,7 +111,7 @@ def ajax_test():
 def add_numbers():
     a = request.args.get('a', 0, type=int)
     b = request.args.get('b', 0, type=int)
-    return jsonify(result=a * b)
+    return jsonify(result=a + b)
 
 
 @app.route('/sidebar/')
@@ -108,6 +123,55 @@ def side():
 def save_data():
     add_invoice(request, db);
     return "completed"
+
+@app.route('/_get_player_data')
+def get_player_data():
+    engine = create_engine("mysql://keith:goodhand@localhost/mlb_data")
+    # db = engine.connect()
+    session = scoped_session(sessionmaker(engine, autoflush=False))
+
+    n = request.args.get('player', 'fail', type=str)
+    n = n.split(' ', 1)
+    first_name = n[0]
+    last_name = n[1]
+    p = session.query(Player).filter(Player.first_name == first_name).filter(Player.last_name == last_name).first()
+
+
+    def get_plot(player_id):
+
+        atbats = session.query(At_bat).filter(At_bat.batter == player_id).all()
+        ab_list = [x.id for x in atbats]
+        query = session.query(Pitch).filter(Pitch.at_bat.in_(ab_list))
+        df = pandas.read_sql(query.statement, query.session.bind)
+
+        strikes = df[(df.des == "Called Strike")]
+        balls = df[(df.des == 'Ball') | (df.des == "Intent Ball")]
+        xs = strikes.px
+        ys = strikes.pz
+        xb = balls.px
+        yb = balls.pz
+        szt = df.sz_top.mean()
+        szb = df.sz_bot.mean()
+        plate_edge = 17 / 2 / 12
+        bl = (-plate_edge, szb)
+        h = float(szt - szb)
+        w = float(plate_edge * 2)
+        fig = plt.figure()
+        ax1 = fig.add_subplot(111, aspect='equal')
+        ax1.add_patch(patches.Rectangle(bl, w, h, fill=False))
+        plt.scatter(xb, yb, s=1, marker=u'x', c='blue')
+        plt.scatter(xs, ys, s=1, marker=u'o', c='red')
+
+        return (fig)
+    plot = mpld3.fig_to_d3(get_plot(p.id))
+
+
+
+
+    return jsonify(result=plot)
+
+
+
 
 
 @app.route('/drop/')
