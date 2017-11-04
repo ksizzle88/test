@@ -1,0 +1,43 @@
+{% block body %}
+
+<p>
+I chose to use baseball data since I know that it is a rich, well maintained, freely available, large data set. 
+<br>
+<br>
+The first step in the process was to get the data from the MLB. 
+<br>
+<br>
+The data is freely available at http://gd2.mlb.com/components/game/mlb/ however it needed to be compiled into a more manageable format that the thousands of xml documents that it exists in publicly.
+<br>
+<br>
+Rather than use an the only api i could find available PitchFX data (PitchRX) I chose to write my own script because I wanted to use Python, and design the database in SQLAlchemy so it would be easier to use in conjunction with flask. 
+<br>
+<br>
+After looking at the data to better understand the structure I designed a database using MySql in conjunction with python and SQLAlchemy.
+<br>
+<br>
+I wrote a script using beautifulsoup to navigate the pages, and save all of the data to the database. 
+<br>
+<br>
+Unsure of the analysis I eventually wanted to do, I figured I’d play around with the data a little bit. After plotting all of the pitches thrown to David Ortiz, I became interested in seeing where the de facto  strike zone is in comparison with the strike zone as defined by the rulebook.
+<br>
+<br>
+Next I filtered out all pitches that were not swung at, marking the strikes as red and the balls as blue.
+<br>
+<br>
+The data from the MLB came with strike zone data (the height of the top and the bottom of the strike zone as defined by the rulebook) for each pitch. Next I took the average top and bottom for each pitch on the plot and and drew a rectangle using those points (the left and right edges are defined by home plate which is 17 inches wide). It was clear that more strikes are called down and away than up and in.
+<br>
+<br>
+It was at this point that I had enough to begin sharing. I abstracted my code so I could apply it to any chosen player, and built this website using flask.
+<br>
+<br>
+I plan on doing more analysis on this data, in particular, to answer the question “where is the strike zone in reality?”
+<br>
+<br>
+I plan on doing analyses using K nearest neighbors, SVM, Logistic regression, and perhaps neural network.
+<br>
+<br>
+I understand that there is going to be a clear bias in this data, specifically that I am only looking at pitches are not swung at, perhaps there are few strikes called up and in on David Ortiz 
+</p>
+
+{% endblock %}

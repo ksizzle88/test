@@ -10,6 +10,9 @@ from matplotlib import pylab as plt
 from matplotlib import patches
 import pandas
 import mpld3
+import base64
+import io
+
 
 import sys
 
@@ -72,6 +75,9 @@ def register():
 def ocrpage():
     return render("ocr.html")
 
+@app.route('/details/')
+def detailspage():
+    return render("Details.html")
 
 @app.route('/dashboard/')
 def dashboard():
@@ -161,9 +167,15 @@ def get_player_data():
         ax1.add_patch(patches.Rectangle(bl, w, h, fill=False))
         plt.scatter(xb, yb, s=1, marker=u'x', c='blue')
         plt.scatter(xs, ys, s=1, marker=u'o', c='red')
+        f = io.BytesIO()
+        plt.savefig(f, format="png", facecolor=(0.95, 0.95, 0.95))
+        encoded_img = base64.b64encode(f.getvalue()).decode('utf-8').replace('\n', '')
+        f.close()
 
-        return (fig)
-    plot = mpld3.fig_to_html(get_plot(p.id))
+        return (encoded_img)
+    plot = get_plot(p.id)
+    plot = '<img src="data:image/png;base64,%s" />' % plot
+
 
 
 
