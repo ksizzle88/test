@@ -8,6 +8,7 @@ from mlb_db_models import *
 from sqlalchemy.orm import sessionmaker, scoped_session
 from matplotlib import pylab as plt
 from matplotlib import patches
+matplotlib.use("agg")
 import pandas
 import mpld3
 import base64
