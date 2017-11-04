@@ -6,6 +6,7 @@ from flask_sqlalchemy import SQLAlchemy
 from controllers import add_user, check_login, add_invoice
 from mlb_db_models import *
 from sqlalchemy.orm import sessionmaker, scoped_session
+import  matplotlib
 from matplotlib import pylab as plt
 from matplotlib import patches
 matplotlib.use("agg")
