@@ -7,9 +7,10 @@ from controllers import add_user, check_login, add_invoice
 from mlb_db_models import *
 from sqlalchemy.orm import sessionmaker, scoped_session
 import  matplotlib
+matplotlib.use("agg")
 from matplotlib import pylab as plt
 from matplotlib import patches
-matplotlib.use("agg")
+
 import pandas
 import mpld3
 import base64
