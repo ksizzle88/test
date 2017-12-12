@@ -10,6 +10,8 @@ import  matplotlib
 matplotlib.use("agg")
 from matplotlib import pylab as plt
 from matplotlib import patches
+from sklearn import svm
+import numpy as np
 
 import pandas
 import mpld3
@@ -145,16 +147,19 @@ def get_player_data():
     last_name = n[1]
     p = session.query(Player).filter(Player.first_name == first_name).filter(Player.last_name == last_name).first()
 
-
     def get_plot(player_id):
-
         atbats = session.query(At_bat).filter(At_bat.batter == player_id).all()
         ab_list = [x.id for x in atbats]
+
         query = session.query(Pitch).filter(Pitch.at_bat.in_(ab_list))
         df = pandas.read_sql(query.statement, query.session.bind)
 
         strikes = df[(df.des == "Called Strike")]
         balls = df[(df.des == 'Ball') | (df.des == "Intent Ball")]
+        strikes.px.dropna(inplace=True)
+        strikes.pz.dropna(inplace=True)
+        balls.pz.dropna(inplace=True)
+        balls.px.dropna(inplace=True)
         xs = strikes.px
         ys = strikes.pz
         xb = balls.px
@@ -165,11 +170,40 @@ def get_player_data():
         bl = (-plate_edge, szb)
         h = float(szt - szb)
         w = float(plate_edge * 2)
+        import matplotlib.pyplot as plt
+        import matplotlib.patches as patches
+
+        coords = []
+        call = []
+        for i in zip(xs, ys):
+            coords.append(list(i))
+            call.append(1)
+        for i in zip(xb, yb):
+            coords.append(list(i))
+            call.append(0)
+
+        classifier = svm.SVC()
+        classifier.fit(coords, call)
+        ncoords = np.array(coords)
+        x_min, x_max = min(ncoords[:, 0]) - 1, max(ncoords[:, 0]) + 1
+        y_min, y_max = min(ncoords[:, 1]) - 1, max(ncoords[:, 1]) + 1
+        xx, yy = np.meshgrid(np.arange(x_min, x_max, 0.1),
+                             np.arange(y_min, y_max, 0.1))
+
+        Z = classifier.predict(np.c_[xx.ravel(), yy.ravel()])
+        Z = Z.reshape(xx.shape)
+
         fig = plt.figure()
         ax1 = fig.add_subplot(111, aspect='equal')
         ax1.add_patch(patches.Rectangle(bl, w, h, fill=False))
-        plt.scatter(xb, yb, s=1, marker=u'x', c='blue')
-        plt.scatter(xs, ys, s=1, marker=u'o', c='red')
+        # plt.scatter(xb,yb, s = 1, marker=u'x',c='blue')
+        # plt.scatter(xs,ys, s = 1, marker=u'o',c='red')
+
+        ax1.contour(xx, yy, Z, 1, colors="c", linewidths=2)
+        ax1.scatter(xb, yb, s=1, marker=u'x', c='blue')
+        ax1.scatter(xs, ys, s=1, marker=u'o', c='red')
+        ax1.add_patch(patches.Rectangle(bl, w, h, fill=False))
+
         f = io.BytesIO()
         plt.savefig(f, format="png", facecolor=(0.95, 0.95, 0.95))
         encoded_img = base64.b64encode(f.getvalue()).decode('utf-8').replace('\n', '')
